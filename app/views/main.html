@@ -1,0 +1,54 @@
+<div class="hero-unit">
+  <h1>'Allo, 'Allo!</h1>
+  <p>You now have</p>
+  <ul>
+      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
+  </ul>
+  <p>installed.</p>
+  <h3>Enjoy coding! - Yeoman</h3>
+</div>
+<button data-ng-click="clearAll()">Clear</button>
+
+
+
+
+<div data-ng-repeat="curTask in model.tasks|orderBy:'id':true" class="row-fluid">
+{{curTask.id}}
+	<input type="text" data-ng-model="curTask.taskDate">
+	<input type="text" data-ng-model="curTask.taskName" list="taskNames">
+	<input type="text" data-ng-model="curTask.startTime">
+	<input type="text" data-ng-model="curTask.endTime">
+</div>
+
+<!--
+<div class="row-fluid" data-ng-repeat="tempTask in model.tempTasks|orderBy:'pos':false|filter:{show:true}">
+	<input type="text" data-ng-model="tempTask.taskDate">
+	<input type="text" data-ng-model="tempTask.taskName" list="taskNames">
+	<input type="text" data-ng-model="tempTask.startTime">
+	<input type="text" data-ng-model="tempTask.endTime">
+	<input type="hidden" data-ng-model="tempTask.id">
+</div>
+-->
+<div class="row-fluid" >
+	<input type="text" data-ng-model="model.curTask.taskDate">
+	<input type="text" data-ng-model="model.curTask.taskName" list="taskNames">
+	<input type="text" data-ng-model="model.curTask.startTime">
+	<input type="text" data-ng-model="model.curTask.endTime">
+	<input type="hidden" data-ng-model="model.curTask.id">
+	<button data-ng-click="addItem(model.curTask)">Next</button>
+</div>
+<!--
+<div class="row-fluid" >
+	<input type="text" data-ng-model="nextTask.taskDate"  data-ng-keypress="keyHandled()" data-ng-keyup="keyHandled()" data-ng-keydown="keyHandled()">
+	<input type="text" data-ng-model="nextTask.taskName" >
+	<input type="text" data-ng-model="nextTask.startTime" >
+	<input type="text" data-ng-model="nextTask.endTime" >
+	<input type="hidden" data-ng-model="nextTask.id" >
+</div>
+-->
+<datalist id="taskNames">
+	<option data-ng-repeat="task in model.taskNames" value="{{task}}">{{task}}</option>
+
+</datalist>
+
+
