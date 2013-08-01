@@ -67,22 +67,28 @@ angular.module('tiwoApp').service('timeService', function($q, $http) {
     };
 
     timeService.prototype.dateDiff = function(startTime, endTime, format) {
-      var deferred, diff, mod;
+      var DAY, HOUR, MIN, deferred, diff, mod;
       if (format == null) {
         format = "h";
       }
+      DAY = 1000 * 60 * 60 * 24;
+      HOUR = 1000 * 60 * 60;
+      MIN = 1000 * 60;
       switch (format) {
         case "h":
-          mod = 3600000;
+          mod = HOUR;
           break;
         case "m":
-          mod = 100;
+          mod = MIN;
+          break;
+        case "d":
+          mod = DAY;
           break;
         default:
           mod = 100;
       }
       deferred = $q.defer();
-      diff = (endTime - startTime) / mod;
+      diff = (endTime.getTime() - startTime.getTime()) / mod;
       deferred.resolve(diff);
       return deferred.promise;
     };

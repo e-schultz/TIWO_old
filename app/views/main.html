@@ -13,22 +13,21 @@
 
 
 <div data-ng-repeat="curTask in model.tasks|orderBy:'id':true" class="row-fluid">
-{{curTask.id}}
+<!--
 	<input type="text" data-ng-model="curTask.taskDate">
 	<input type="text" data-ng-model="curTask.taskName" list="taskNames">
 	<input type="text" data-ng-model="curTask.startTime">
 	<input type="text" data-ng-model="curTask.endTime">
+-->
+	<div class="span2">	<span type="text"> {{curTask.taskDate}} </span> </div>
+	<div class="span2"> <span type="text"> {{curTask.taskName}} </span> </div>
+	<div class="span2"> <span type="text"> {{curTask.startTime}} </span> </div>
+	<div class="span2"><span type="text"> {{curTask.endTime}} </span> </div>
+	<div class="span2"><span type="text"> {{curTask.duration}} </span> </div>
+	
+
 </div>
 
-<!--
-<div class="row-fluid" data-ng-repeat="tempTask in model.tempTasks|orderBy:'pos':false|filter:{show:true}">
-	<input type="text" data-ng-model="tempTask.taskDate">
-	<input type="text" data-ng-model="tempTask.taskName" list="taskNames">
-	<input type="text" data-ng-model="tempTask.startTime">
-	<input type="text" data-ng-model="tempTask.endTime">
-	<input type="hidden" data-ng-model="tempTask.id">
-</div>
--->
 <div class="row-fluid" >
 	<input type="text" data-ng-model="model.curTask.taskDate">
 	<input type="text" data-ng-model="model.curTask.taskName" list="taskNames">
@@ -37,15 +36,7 @@
 	<input type="hidden" data-ng-model="model.curTask.id">
 	<button data-ng-click="addItem(model.curTask)">Next</button>
 </div>
-<!--
-<div class="row-fluid" >
-	<input type="text" data-ng-model="nextTask.taskDate"  data-ng-keypress="keyHandled()" data-ng-keyup="keyHandled()" data-ng-keydown="keyHandled()">
-	<input type="text" data-ng-model="nextTask.taskName" >
-	<input type="text" data-ng-model="nextTask.startTime" >
-	<input type="text" data-ng-model="nextTask.endTime" >
-	<input type="hidden" data-ng-model="nextTask.id" >
-</div>
--->
+
 <datalist id="taskNames">
 	<option data-ng-repeat="task in model.taskNames" value="{{task}}">{{task}}</option>
 

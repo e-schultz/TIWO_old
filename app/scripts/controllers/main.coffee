@@ -21,12 +21,19 @@ angular.module('tiwoApp')
         
         
         $scope.addItem = (item) ->
-            timeService.parseDate(item.startTime).then (data) ->
-                console.log('data is',data)
-            taskService.add(item)
-            $scope.model.tasks = $scope.getTasks()
-            $scope.model.curTask = {}
-            $scope.model.taskNames = taskService.getTaskNames()
+            item.startTime = timeService.parseDate(item.startTime)
+            .then (data) ->
+                item.startTime = data
+                return timeService.parseDate(item.endTime)
+            .then (data) ->
+                item.endTime = data
+                return timeService.dateDiff(item.startTime,item.endTime,"h")
+            .then (data) ->
+                item.duration = data
+                taskService.add(item)
+                $scope.model.tasks = $scope.getTasks()
+                $scope.model.curTask = {}
+                $scope.model.taskNames = taskService.getTaskNames()
 
         $scope.$watch 'model.tasks', (newValue,oldValue) ->
             if !angular.equals(newValue,oldValue) and newValue

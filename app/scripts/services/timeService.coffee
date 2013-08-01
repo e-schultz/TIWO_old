@@ -51,13 +51,18 @@ angular.module('tiwoApp')
         deferred.resolve(result)
         return deferred.promise
       dateDiff: (startTime,endTime,format = "h") ->
+        DAY = 1000 * 60 * 60  * 24
+        HOUR = 1000 * 60 * 60
+        MIN = 1000 * 60
+        
         switch format
-          when "h" then mod = 3600000
-          when "m" then mod = 100
+          when "h" then mod = HOUR
+          when "m" then mod = MIN
+          when "d" then mod = DAY
           else mod = 100
 
         deferred = $q.defer()
-        diff = (endTime - startTime) / mod 
+        diff = (endTime.getTime() - startTime.getTime()) / mod 
         deferred.resolve(diff)
         return deferred.promise
     return new timeService()

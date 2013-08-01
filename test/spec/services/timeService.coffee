@@ -8,6 +8,12 @@ describe 'Service: timeService', () ->
   # instantiate service
   timeService = {}
   rootScope = null
+  cleanDate = (hour,min,sec) ->
+    date = new Date()
+    date.setHours(hour)
+    date.setMinutes(min)
+    date.setSeconds(sec)
+    return date
   beforeEach inject (_timeService_,$rootScope) ->
     timeService = _timeService_
     rootScope = $rootScope
@@ -56,18 +62,39 @@ describe 'Service: timeService', () ->
     expect(result.getDate()).toBe 1
     expect(result.getHours()).toBe 3
 
-  it 'should expect 9am-10am to have a time difference of 1 hour', () ->
-    startDate = new Date()
-    startDate.setHours(9)
-    startDate.setMinutes(0)
-    startDate.setSeconds(0)
-    endDate = new Date()
-    endDate.setHours(10)
-    endDate.setMinutes(0)
-    endDate.setSeconds(0)
+  it 'should expect times 9am-10am to have a time difference of 1 hour', () ->
+    startDate = cleanDate(9,0,0)
+    endDate = cleanDate(10,0,0)
     result = timeService.dateDiff(startDate,endDate).then (data) ->
       result = data
     rootScope.$apply()
     expect(result).toBe(1)
+
+  it 'should expect times 9am-10am to have a time difference of 60 min', () ->
+    startDate = cleanDate(9,0,0)
+    endDate = cleanDate(10,0,0)
+    
+    result = timeService.dateDiff(startDate,endDate,"m").then (data) ->
+      result = data
+    rootScope.$apply()
+    expect(result).toBe(60)
+
+  it 'should expect times 9am-10:30am to have a time difference of 90 min', () ->
+    startDate = cleanDate(9,0,0)
+    endDate = cleanDate(10,30,0)
+    
+    result = timeService.dateDiff(startDate,endDate,"m").then (data) ->
+      result = data
+    rootScope.$apply()
+    expect(result).toBe(90)
+
+  it 'should expect times 9am-10:30am to have a time difference of 1.5h', () ->
+    startDate = cleanDate(9,0,0)
+    endDate = cleanDate(10,30,0)
+    
+    result = timeService.dateDiff(startDate,endDate).then (data) ->
+      result = data
+    rootScope.$apply()
+    expect(result).toBe(1.5)
 
    
