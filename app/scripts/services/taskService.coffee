@@ -34,7 +34,6 @@ angular.module('tiwoApp')
         taskList = getStorage() if !taskList or taskList.length == 0
       get: (id) ->
         deferred = $q.defer()
-        promise = deferred.promise
         if !id 
            deferred.resolve taskList 
         else 
