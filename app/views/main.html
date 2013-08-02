@@ -19,10 +19,10 @@
 	<input type="text" data-ng-model="curTask.startTime">
 	<input type="text" data-ng-model="curTask.endTime">
 -->
-	<div class="span2">	<span type="text"> {{curTask.taskDate}} </span> </div>
+	<div class="span2">	<span type="text"> {{curTask.taskDate | date:'MM/dd/yyyy'}} </span> </div>
 	<div class="span2"> <span type="text"> {{curTask.taskName}} </span> </div>
-	<div class="span2"> <span type="text"> {{curTask.startTime}} </span> </div>
-	<div class="span2"><span type="text"> {{curTask.endTime}} </span> </div>
+	<div class="span2"> <span type="text"> {{curTask.startTime | date:'hh:mm a'}} </span> </div>
+	<div class="span2"><span type="text"> {{curTask.endTime | date:'hh:mm a'}} </span> </div>
 	<div class="span2"><span type="text"> {{curTask.duration}} </span> </div>
 	
 

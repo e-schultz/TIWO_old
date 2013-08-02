@@ -42,7 +42,6 @@ angular.module('tiwoApp')
 
       add:(item) ->
         deferred = $q.defer()
-        promise = deferred.promise
         item.id = getNextId()
         taskList.push item
         setStorage taskList
@@ -55,9 +54,9 @@ angular.module('tiwoApp')
 
       getTaskNames:()->
         deferred = $q.defer()
-        promise = deferred.promise
         taskNames = (item.taskName for item in taskList)
-        deferred.resolve(unique(taskNames))
+        taskNames = unique(taskNames)
+        deferred.resolve(taskNames)
         return deferred.promise;
 
       update:(item)->

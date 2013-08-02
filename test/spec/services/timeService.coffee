@@ -13,6 +13,7 @@ describe 'Service: timeService', () ->
     date.setHours(hour)
     date.setMinutes(min)
     date.setSeconds(sec)
+    date.setMilliseconds(0)
     return date
   beforeEach inject (_timeService_,$rootScope) ->
     timeService = _timeService_

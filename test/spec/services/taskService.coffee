@@ -35,7 +35,6 @@ describe 'Service: taskService', () ->
 		localStorage.taskList = JSON.stringify(angular.copy(getTasks()))
 		rootScope = $rootScope
 
-
 	it 'should do something', () ->
 		expect(!!taskService).toBe true;
 
@@ -66,6 +65,23 @@ describe 'Service: taskService', () ->
 			result = data
 		rootScope.$apply()
 		expect(result[0].id).toEqual(1)
+
+	it 'should return a list of unique task names in the collection',()->
+		taskService.clearAll()
+		result = taskService.get(1).then (data) ->
+			result = data
+		
+		taskService.add({taskName: 'Phoenix 1'})
+		taskService.add({taskName: 'Phoenix 1'})
+		taskService.add({taskName: 'Phoenix 2'})
+		taskService.add({taskName: 'Phoenix 3'})
+		taskService.add({taskName: 'Phoenix 3'})
+		
+		result = taskService.getTaskNames().then (data) ->
+			result = data
+
+		rootScope.$apply()
+		expect(result.length).toEqual(3)
 
 
 
