@@ -16,6 +16,9 @@ angular.module('tiwoApp')
       s.replace /^\s+|\s+$/g, ""
 
     parseDate = (strDate) ->
+      if angular.isDate(strDate)
+        return strDate
+        
       strDate = trim(strDate)
       parsed = rexp.exec(strDate)
       return null  if not strDate or not parsed
@@ -46,10 +49,11 @@ angular.module('tiwoApp')
 
     class timeService
       parseDate: (inputTime) ->
-        deferred = $q.defer()
-        result = parseDate(inputTime)
-        deferred.resolve(result)
-        return deferred.promise
+        #deferred = $q.defer()
+        result = inputTime
+        result = parseDate(inputTime) unless !inputTime?
+        #deferred.resolve(result)
+        #return deferred.promise
       dateDiff: (startTime,endTime,format = "h") ->
         DAY = 1000 * 60 * 60  * 24
         HOUR = 1000 * 60 * 60
@@ -61,10 +65,10 @@ angular.module('tiwoApp')
           when "d" then mod = DAY
           else mod = 100
 
-        deferred = $q.defer()
+        #deferred = $q.defer()
         diff = (endTime.getTime() - startTime.getTime()) / mod 
-        deferred.resolve(diff)
-        return deferred.promise
+        #deferred.resolve(diff)
+        #return deferred.promise
     return new timeService()
     # AngularJS will instantiate a singleton by calling "new" on this function
 

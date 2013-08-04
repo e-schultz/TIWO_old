@@ -22,20 +22,8 @@ angular.module('tiwoApp')
             getTasks()
             getTaskNames()
         $scope.addItem = (item) ->
-            item.startTime = timeService.parseDate(item.startTime)
-            .then (data) ->
-                item.startTime = data
-                return timeService.parseDate(item.endTime)
-            .then (data) ->
-                item.endTime = data
-                return timeService.dateDiff(item.startTime,item.endTime,"h")
-            .then (data) ->
-                item.duration = data
-                return timeService.parseDate(item.taskDate)
-            .then (data) ->
-                item.taskDate = data
-                taskService.add(item)
-                $scope.model.curTask =  taskDate : $filter('date')(angular.copy(item.taskDate),'MM/dd/yyyy')
+            taskService.add(item).then (data) ->
+                $scope.model.curTask =  taskDate : $filter('date')(angular.copy(data.taskDate),'MM/dd/yyyy')
                 getTasks()
                 getTaskNames()
 
