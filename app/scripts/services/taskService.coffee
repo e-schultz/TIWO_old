@@ -22,7 +22,7 @@ angular.module('tiwoApp')
       input.then (data) ->
         collection = data
         group = _(collection).groupBy (item) ->
-          return item.taskDate.toLocaleDateString()
+          return new Date(item.taskDate).toLocaleDateString()
 
         _.forEach(group,(item,index,collection) ->
           taskGroup = _(item).groupBy (task)->

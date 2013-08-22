@@ -1,37 +1,43 @@
 'use strict'
 
 angular.module('tiwoApp')
-    .controller 'MainCtrl', ['$scope','taskService', 'timeService','$filter', ($scope,taskService,timeService,$filter) ->
+    .controller 'MainCtrl', ['$scope','taskService', 'timeService','$filter','$q', ($scope,taskService,timeService,$filter,$q) ->
         $scope.model = {}       
         $scope.model.curTask = {}
+        $scope.model.taskGroups = {}
         
-        
-        getTasks = () ->
+        $scope.getTasks = () ->
+            deferred = $q.defer()
             taskService.get().then (data) ->
                 $scope.model.tasks = data
+                deferred.resolve(data)
+            return deferred.promise;
 
-        getTaskNames = () ->
+        $scope.getTaskNames = () ->
             taskService.getTaskNames().then (data) ->
                 $scope.model.taskNames = data
 
-        getTasks()
-        getTaskNames()
-        
+        $scope.getGroups = () ->
+            deferred = $q.defer()
+            taskService.groupBy('D').then (data) ->
+                $scope.model.taskGroups = data
+                deferred.resolve(data)
+            return deferred.promise
+
+        $scope.getTasks()
+        $scope.getTaskNames()
+        $scope.getGroups()
+
         $scope.clearAll = () -> 
             taskService.clearAll()
-            getTasks()
-            getTaskNames()
-        $scope.addItem = (item) ->
-            taskService.add(item).then (data) ->
-                $scope.model.curTask =  taskDate : $filter('date')(angular.copy(data.taskDate),'MM/dd/yyyy')
-                getTasks()
-                getTaskNames()
-
+            $scope.getTasks()
+            $scope.getTaskNames()
+    
         $scope.$watch 'model.tasks', (newValue,oldValue) ->
             if !angular.equals(newValue,oldValue) and newValue
                 taskService.update(item) for item in newValue
-                getTaskNames()
-
+                $scope.getTaskNames()
+                $scope.getGroups()
         ,true
 
 

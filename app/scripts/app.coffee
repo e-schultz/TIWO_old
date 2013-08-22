@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('tiwoApp', [])
+angular.module('tiwoApp', ['tiwoApp.tiTask'])
   .config ['$routeProvider', ($routeProvider) ->
     $routeProvider
       .when '/',
