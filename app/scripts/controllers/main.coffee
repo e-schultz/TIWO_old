@@ -33,6 +33,12 @@ angular.module('tiwoApp')
             $scope.getTasks()
             $scope.getTaskNames()
     
+        $scope.addItem = (item) ->
+            taskService.add(item).then (data) ->
+                $scope.model.curTask =  taskDate : $filter('date')(angular.copy(data.taskDate),'MM/dd/yyyy')
+                $scope.getTasks()
+                $scope.getTaskNames()
+                
         $scope.$watch 'model.tasks', (newValue,oldValue) ->
             if !angular.equals(newValue,oldValue) and newValue
                 taskService.update(item) for item in newValue

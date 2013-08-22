@@ -28,7 +28,6 @@ angular.module('tiwoApp.tiTask')
  		
 
  	$scope.addTask = (task) ->
- 		x = []
  		timeSpans = task.timeSpans.split(',')
  		generateTask span,task for span in timeSpans
  		
